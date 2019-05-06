@@ -5,7 +5,7 @@
 input PostOrderInput {
   name: String!
   group: String!
-  status: Category!,
+  status: Status!,
   photos: [PhotoInput!]!
 }
 
@@ -26,13 +26,12 @@ type IndexedImage {
   width: Int
 }
 
-
-
 type Query {
-  openOrders: [Order!]!,
+  ordersByStatus(status: Status): [Order!]!,
   findImage(tag: String): [IndexedImage!]
 }
 
 type Mutation {
-  createOrder(order: PostOrderInput): Order
+  createOrder(order: PostOrderInput): Order,
+  printOrder(id: ID!): Order
 }

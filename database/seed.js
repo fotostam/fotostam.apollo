@@ -13,16 +13,18 @@ const setup = async () => {
             
             name: 'First order',
             group: 'Welpen',
-            status: 'OPEN',
+            status: 'IN_PRODUCTION',
             photos: {
                 create: [
                 {
-                    tag: 'A-123',
-                    amount: 2
+                    tag: 'test.png',
+                    amount: 2,
+                    status: 'HEALTHY'
                 },
                 {
-                    tag: 'G-123',
-                    amount: 1
+                    tag: 'test2.png',
+                    amount: 1,
+                    status: 'HEALTHY'
                 }
             ]
             }

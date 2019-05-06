@@ -4,7 +4,8 @@ type Order {
   updatedAt: DateTime! @updatedAt
   name: String
   group: String
-  status: Category
+  status: Status
+  error: String
   photos: [Photo!]!
 }
 
@@ -12,11 +13,19 @@ type Photo {
   id: ID! @id
   tag: String!
   amount: Int!
+  status: PhotoStatus!
+  error: String
   order: Order! @relation(link: INLINE)
 }
 
-enum Category {
-  OPEN
-  PRODUCTION
+enum PhotoStatus {
+  HEALTHY
+  ERROR
+}
+
+enum Status {
+  ON_HOLD
+  IN_PRODUCTION
+  ERROR
   DONE
 }

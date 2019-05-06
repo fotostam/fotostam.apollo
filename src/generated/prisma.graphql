@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Fri May 03 2019 13:54:33 GMT+0200 (Central European Summer Time)
+# timestamp: Mon May 06 2019 22:47:54 GMT+0200 (Central European Summer Time)
 
 type AggregateOrder {
   count: Int!
@@ -12,12 +12,6 @@ type AggregatePhoto {
 type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
-}
-
-enum Category {
-  OPEN
-  PRODUCTION
-  DONE
 }
 
 scalar DateTime
@@ -61,7 +55,8 @@ type Order implements Node {
   updatedAt: DateTime!
   name: String
   group: String
-  status: Category
+  status: Status
+  error: String
   photos(where: PhotoWhereInput, orderBy: PhotoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Photo!]
 }
 
@@ -79,7 +74,8 @@ input OrderCreateInput {
   id: ID
   name: String
   group: String
-  status: Category
+  status: Status
+  error: String
   photos: PhotoCreateManyWithoutOrderInput
 }
 
@@ -92,7 +88,8 @@ input OrderCreateWithoutPhotosInput {
   id: ID
   name: String
   group: String
-  status: Category
+  status: Status
+  error: String
 }
 
 """An edge in a connection."""
@@ -117,6 +114,8 @@ enum OrderOrderByInput {
   group_DESC
   status_ASC
   status_DESC
+  error_ASC
+  error_DESC
 }
 
 type OrderPreviousValues {
@@ -125,7 +124,8 @@ type OrderPreviousValues {
   updatedAt: DateTime!
   name: String
   group: String
-  status: Category
+  status: Status
+  error: String
 }
 
 type OrderSubscriptionPayload {
@@ -168,14 +168,16 @@ input OrderSubscriptionWhereInput {
 input OrderUpdateInput {
   name: String
   group: String
-  status: Category
+  status: Status
+  error: String
   photos: PhotoUpdateManyWithoutOrderInput
 }
 
 input OrderUpdateManyMutationInput {
   name: String
   group: String
-  status: Category
+  status: Status
+  error: String
 }
 
 input OrderUpdateOneRequiredWithoutPhotosInput {
@@ -188,7 +190,8 @@ input OrderUpdateOneRequiredWithoutPhotosInput {
 input OrderUpdateWithoutPhotosDataInput {
   name: String
   group: String
-  status: Category
+  status: Status
+  error: String
 }
 
 input OrderUpsertWithoutPhotosInput {
@@ -369,16 +372,56 @@ input OrderWhereInput {
 
   """All values not ending with the given string."""
   group_not_ends_with: String
-  status: Category
+  status: Status
 
   """All values that are not equal to given value."""
-  status_not: Category
+  status_not: Status
 
   """All values that are contained in given list."""
-  status_in: [Category!]
+  status_in: [Status!]
 
   """All values that are not contained in given list."""
-  status_not_in: [Category!]
+  status_not_in: [Status!]
+  error: String
+
+  """All values that are not equal to given value."""
+  error_not: String
+
+  """All values that are contained in given list."""
+  error_in: [String!]
+
+  """All values that are not contained in given list."""
+  error_not_in: [String!]
+
+  """All values less than the given value."""
+  error_lt: String
+
+  """All values less than or equal the given value."""
+  error_lte: String
+
+  """All values greater than the given value."""
+  error_gt: String
+
+  """All values greater than or equal the given value."""
+  error_gte: String
+
+  """All values containing the given string."""
+  error_contains: String
+
+  """All values not containing the given string."""
+  error_not_contains: String
+
+  """All values starting with the given string."""
+  error_starts_with: String
+
+  """All values not starting with the given string."""
+  error_not_starts_with: String
+
+  """All values ending with the given string."""
+  error_ends_with: String
+
+  """All values not ending with the given string."""
+  error_not_ends_with: String
   photos_every: PhotoWhereInput
   photos_some: PhotoWhereInput
   photos_none: PhotoWhereInput
@@ -407,6 +450,8 @@ type Photo implements Node {
   id: ID!
   tag: String!
   amount: Int!
+  status: PhotoStatus!
+  error: String
   order: Order!
 }
 
@@ -424,6 +469,8 @@ input PhotoCreateInput {
   id: ID
   tag: String!
   amount: Int!
+  status: PhotoStatus!
+  error: String
   order: OrderCreateOneWithoutPhotosInput!
 }
 
@@ -436,6 +483,8 @@ input PhotoCreateWithoutOrderInput {
   id: ID
   tag: String!
   amount: Int!
+  status: PhotoStatus!
+  error: String
 }
 
 """An edge in a connection."""
@@ -454,12 +503,18 @@ enum PhotoOrderByInput {
   tag_DESC
   amount_ASC
   amount_DESC
+  status_ASC
+  status_DESC
+  error_ASC
+  error_DESC
 }
 
 type PhotoPreviousValues {
   id: ID!
   tag: String!
   amount: Int!
+  status: PhotoStatus!
+  error: String
 }
 
 input PhotoScalarWhereInput {
@@ -573,6 +628,61 @@ input PhotoScalarWhereInput {
 
   """All values greater than or equal the given value."""
   amount_gte: Int
+  status: PhotoStatus
+
+  """All values that are not equal to given value."""
+  status_not: PhotoStatus
+
+  """All values that are contained in given list."""
+  status_in: [PhotoStatus!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [PhotoStatus!]
+  error: String
+
+  """All values that are not equal to given value."""
+  error_not: String
+
+  """All values that are contained in given list."""
+  error_in: [String!]
+
+  """All values that are not contained in given list."""
+  error_not_in: [String!]
+
+  """All values less than the given value."""
+  error_lt: String
+
+  """All values less than or equal the given value."""
+  error_lte: String
+
+  """All values greater than the given value."""
+  error_gt: String
+
+  """All values greater than or equal the given value."""
+  error_gte: String
+
+  """All values containing the given string."""
+  error_contains: String
+
+  """All values not containing the given string."""
+  error_not_contains: String
+
+  """All values starting with the given string."""
+  error_starts_with: String
+
+  """All values not starting with the given string."""
+  error_not_starts_with: String
+
+  """All values ending with the given string."""
+  error_ends_with: String
+
+  """All values not ending with the given string."""
+  error_not_ends_with: String
+}
+
+enum PhotoStatus {
+  HEALTHY
+  ERROR
 }
 
 type PhotoSubscriptionPayload {
@@ -615,17 +725,23 @@ input PhotoSubscriptionWhereInput {
 input PhotoUpdateInput {
   tag: String
   amount: Int
+  status: PhotoStatus
+  error: String
   order: OrderUpdateOneRequiredWithoutPhotosInput
 }
 
 input PhotoUpdateManyDataInput {
   tag: String
   amount: Int
+  status: PhotoStatus
+  error: String
 }
 
 input PhotoUpdateManyMutationInput {
   tag: String
   amount: Int
+  status: PhotoStatus
+  error: String
 }
 
 input PhotoUpdateManyWithoutOrderInput {
@@ -648,6 +764,8 @@ input PhotoUpdateManyWithWhereNestedInput {
 input PhotoUpdateWithoutOrderDataInput {
   tag: String
   amount: Int
+  status: PhotoStatus
+  error: String
 }
 
 input PhotoUpdateWithWhereUniqueWithoutOrderInput {
@@ -772,6 +890,56 @@ input PhotoWhereInput {
 
   """All values greater than or equal the given value."""
   amount_gte: Int
+  status: PhotoStatus
+
+  """All values that are not equal to given value."""
+  status_not: PhotoStatus
+
+  """All values that are contained in given list."""
+  status_in: [PhotoStatus!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [PhotoStatus!]
+  error: String
+
+  """All values that are not equal to given value."""
+  error_not: String
+
+  """All values that are contained in given list."""
+  error_in: [String!]
+
+  """All values that are not contained in given list."""
+  error_not_in: [String!]
+
+  """All values less than the given value."""
+  error_lt: String
+
+  """All values less than or equal the given value."""
+  error_lte: String
+
+  """All values greater than the given value."""
+  error_gt: String
+
+  """All values greater than or equal the given value."""
+  error_gte: String
+
+  """All values containing the given string."""
+  error_contains: String
+
+  """All values not containing the given string."""
+  error_not_contains: String
+
+  """All values starting with the given string."""
+  error_starts_with: String
+
+  """All values not starting with the given string."""
+  error_not_starts_with: String
+
+  """All values ending with the given string."""
+  error_ends_with: String
+
+  """All values not ending with the given string."""
+  error_not_ends_with: String
   order: OrderWhereInput
 }
 
@@ -792,6 +960,13 @@ type Query {
     """The ID of an object"""
     id: ID!
   ): Node
+}
+
+enum Status {
+  ON_HOLD
+  IN_PRODUCTION
+  ERROR
+  DONE
 }
 
 type Subscription {
