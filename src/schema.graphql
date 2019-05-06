@@ -30,7 +30,7 @@ type IndexedImage {
 
 type Query {
   openOrders: [Order!]!,
-  findImage(tag: String): IndexedImage
+  findImage(tag: String): [IndexedImage!]
 }
 
 type Mutation {

@@ -18,21 +18,20 @@ const resolvers = {
         info
       )
     },
-    findImage: (_, args, context, info) => {
-        return client.search({
+    findImage: async (_, args, context, info) => {
+        let result = await client.search({
           index: 'fotoindex',
           body: { 
             query: {
-              match : {
-                filename: args.tag
+              wildcard : {
+                filename: "*"+args.tag+"*"
               }
             }
           }
-        }, (err, result) => {
-          console.log(result);
-          console.log(result.meta.request)
-          if (err) console.log(err)
-      })
+        
+      });
+
+      return result.body.hits.hits.map(x => x._source);
     }
   },
   Mutation: {
