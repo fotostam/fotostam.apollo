@@ -6,13 +6,16 @@ const path = require('path')
 const { Client } = require('@elastic/elasticsearch')
 const client = new Client({ node: process.env.ELASTICSEARCH_HOST || 'http://localhost:9200'  })
 const fs = require('fs')
+const Thumbor = require('thumbor')
 
 const bucketdir = '/data/bucket/'
 const printdir = '/data/print/'
 
+const thumbor = new Thumbor('', 'http://localhost:8169')
+
 const resolvers = {
   Query: {
-    ordersByStatus: (_, args, context, info) => {
+    orders: (_, args, context, info) => {
       return context.prisma.query.orders(
         {
           where: {
@@ -20,7 +23,19 @@ const resolvers = {
           }
         },
         info
-      )
+      ).then(x => {
+        return x.map(i => {
+          i.photos = i.photos.map(p => {
+            if(p.url == null){
+                p.url = thumbor.setImagePath(p.tag).resize(50,50).buildUrl();
+              }
+                
+              return p;
+          })
+
+          return i;
+        });
+      })
     },
     findImage: async (_, args, context, info) => {
         let result = await client.search({
@@ -35,7 +50,14 @@ const resolvers = {
         
       });
 
-      return result.body.hits.hits.map(x => x._source);
+      return result.body.hits.hits.map(x => {
+        let result = x._source;
+        if(result.filename){
+          result.url = thumbor.setImagePath(result.filename).resize(50,50).buildUrl(); 
+        }
+        return result;  
+      }  
+      );
     }
   },
   Mutation: {

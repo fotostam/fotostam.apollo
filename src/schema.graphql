@@ -24,12 +24,13 @@ type IndexedImage {
   size:	String
   time: Int
   width: Int
+  url: String
 }
 
 type Query {
-  ordersByStatus(status: Status): [Order!]!,
+  orders: [Order!]!,
   findImage(tag: String): [IndexedImage!]
-}
+} 
 
 type Mutation {
   createOrder(order: PostOrderInput): Order,
