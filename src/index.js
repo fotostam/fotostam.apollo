@@ -27,7 +27,7 @@ const resolvers = {
         return x.map(i => {
           i.photos = i.photos.map(p => {
             if(p.url == null){
-                p.url = thumbor.setImagePath(p.tag).resize(50,50).buildUrl();
+                p.url = thumbor.setImagePath(p.tag).resize(150,150).buildUrl();
               }
                 
               return p;
@@ -53,7 +53,7 @@ const resolvers = {
       return result.body.hits.hits.map(x => {
         let result = x._source;
         if(result.filename){
-          result.url = thumbor.setImagePath(result.filename).resize(50,50).buildUrl(); 
+          result.url = thumbor.setImagePath(result.filename).resize(150,150).buildUrl(); 
         }
         return result;  
       }  

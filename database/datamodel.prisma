@@ -15,6 +15,7 @@ type Photo {
   amount: Int!
   status: PhotoStatus!
   error: String
+  url: String
   order: Order! @relation(link: INLINE)
 }
 
