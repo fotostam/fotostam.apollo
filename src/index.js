@@ -88,7 +88,10 @@ const resolvers = {
           }
         },
         info
-      );
+      ).then(x => {
+        console.log(x);
+        return x;
+      });
 
       context.pubsub.publish(NEW_ORDER, {
         newOrder: order
