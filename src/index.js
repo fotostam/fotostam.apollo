@@ -90,10 +90,8 @@ const resolvers = {
         info
       );
 
-      console.log(order);
-
       context.pubsub.publish(NEW_ORDER, {
-        newOrder: context.prisma.query.order({id: order.id})
+        newOrder: context.prisma.query.order({ where: { id: order.id } })
       });
 
       return order;
