@@ -32,7 +32,7 @@ extend type Photo {
 }
 
 type Query {
-  orders: [Order!]!,
+  ordersByStatus(status: Status): [Order!]!,
   findImage(tag: String): [IndexedImage!]
 } 
 

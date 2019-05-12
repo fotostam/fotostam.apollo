@@ -17,7 +17,7 @@ const thumbor = new Thumbor("", "http://localhost:8169");
 
 const resolvers = {
   Query: {
-    orders: (_, args, context, info) => {
+    ordersByStatus: (_, args, context, info) => {
       return context.prisma.query
         .orders(
           {
