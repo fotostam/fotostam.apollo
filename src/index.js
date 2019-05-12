@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { ApolloServer, gql } = require("apollo-server");
+const { ApolloServer, gql, PubSub} = require("apollo-server");
 const { importSchema } = require("graphql-import");
 const { Prisma } = require("prisma-binding");
 const path = require("path");
@@ -14,6 +14,7 @@ const bucketdir = "/data/bucket/";
 const printdir = "/data/print/";
 
 const thumbor = new Thumbor("", "http://localhost:8169");
+const NEW_ORDER = 'NEW_ORDER';
 
 const resolvers = {
   Query: {
@@ -69,8 +70,7 @@ const resolvers = {
   },
   Mutation: {
     createOrder: (_, args, context, info) => {
-      console.log(args);
-      return context.prisma.mutation.createOrder(
+      const order = context.prisma.mutation.createOrder(
         {
           data: {
             name: args.order.name,
@@ -89,6 +89,12 @@ const resolvers = {
         },
         info
       );
+
+      context.pubsub.publish(NEW_ORDER, {
+        newOrder: order
+      });
+
+      return order;
     },
     printOrder: async (_, args, context, info) => {
       //Get order
@@ -183,6 +189,11 @@ const resolvers = {
       }
     }
   },
+  Subscription: {
+    newOrder: {
+      subscribe: (_, __, {pubsub}) => pubsub.asyncIterator(NEW_ORDER)
+    }
+  },
   Node: {
     __resolveType() {
       return null;
@@ -192,6 +203,8 @@ const resolvers = {
 
 const typeDefs = importSchema(path.resolve("src/schema.graphql"));
 
+const pubsub = new PubSub();
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -200,7 +213,8 @@ const server = new ApolloServer({
     prisma: new Prisma({
       typeDefs: "src/generated/prisma.graphql",
       endpoint: process.env.PRISMA_URL
-    })
+    }),
+    pubsub
   })
 });
 

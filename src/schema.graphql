@@ -40,3 +40,7 @@ type Mutation {
   createOrder(order: PostOrderInput): Order,
   printOrder(id: ID!): Order
 }
+
+type Subscription {
+  newOrder: Order!
+}
