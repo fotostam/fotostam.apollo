@@ -78,7 +78,12 @@ const resolvers = {
             status: args.order.status,
             error: args.order.error,
             photos: {
-              create: args.order.photos
+              create: args.order.photos.map(x => {
+                let p = x;
+                p.status = 'HEALTHY'
+
+                return p;
+              })
             }
           }
         },
