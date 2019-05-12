@@ -69,8 +69,8 @@ const resolvers = {
     }
   },
   Mutation: {
-    createOrder: (_, args, context, info) => {
-      const order = context.prisma.mutation.createOrder(
+    createOrder: async (_, args, context, info) => {
+      const order = await context.prisma.mutation.createOrder(
         {
           data: {
             name: args.order.name,
@@ -88,13 +88,12 @@ const resolvers = {
           }
         },
         info
-      ).then(x => {
-        console.log(x);
-        return x;
-      });
+      );
+
+      console.log(order);
 
       context.pubsub.publish(NEW_ORDER, {
-        newOrder: order
+        newOrder: context.prisma.query.order({id: order.id})
       });
 
       return order;
