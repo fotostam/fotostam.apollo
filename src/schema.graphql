@@ -27,6 +27,10 @@ type IndexedImage {
   url: String
 }
 
+extend type Photo {
+    url: String!
+}
+
 type Query {
   orders: [Order!]!,
   findImage(tag: String): [IndexedImage!]
