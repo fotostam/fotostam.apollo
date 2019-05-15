@@ -91,7 +91,35 @@ const resolvers = {
       );
 
       context.pubsub.publish(NEW_ORDER, {
-        newOrder: context.prisma.query.order({ where: { id: order.id } })
+        newOrder: await context.prisma.query.order({ where: { id: order.id } }, gql`{
+          id
+          createdAt
+          updatedAt
+          name
+          group
+          status
+          error
+          photos {
+            id
+            tag
+            amount
+            status
+            error
+            url
+          }
+        }`).then(i => {
+            i.photos = i.photos.map(p => {
+              if (p.url == null && p.tag) {
+                p.url = thumbor
+                  .setImagePath(p.tag)
+                  .resize(150, 150)
+                  .buildUrl();
+              }
+              return p;
+            });
+
+            return i;
+        })
       });
 
       return order;
@@ -191,7 +219,7 @@ const resolvers = {
   },
   Subscription: {
     newOrder: {
-      subscribe: (_, __, {pubsub}) => pubsub.asyncIterator(NEW_ORDER)
+      subscribe: (_, __, {prisma}) => pubsub.asyncIterator(NEW_ORDER)
     }
   },
   Node: {

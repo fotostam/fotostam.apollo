@@ -44,3 +44,22 @@ type Mutation {
 type Subscription {
   newOrder: Order!
 }
+
+fragment OrderFields on Order {
+  id
+  createdAt
+  updatedAt
+  name
+  group
+  status
+  error
+}
+
+fragment PhotoFields on Photo {
+  id
+  tag
+  amount
+  status
+  error
+  url
+}
