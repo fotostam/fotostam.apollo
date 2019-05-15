@@ -2,8 +2,14 @@ type Order {
   id: ID! @id
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
-  name: String
-  group: String
+  name: String!
+  subtype: SubType!
+  group: SubType
+  camp: Int
+  groupphoto: Boolean!
+  digital: Boolean!
+  print: Boolean!
+  email: String
   status: Status
   error: String
   photos: [Photo!]!
@@ -22,6 +28,17 @@ type Photo {
 enum PhotoStatus {
   HEALTHY
   ERROR
+}
+
+enum SubType {
+  BEVERS
+  WELPEN
+  SCOUTS
+  EXPLORERS
+  PIVO
+  STAFF
+  BRONBEEK
+  PERSONAL
 }
 
 enum Status {
