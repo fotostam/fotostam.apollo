@@ -27,6 +27,7 @@ enum PhotoStatus {
 enum Status {
   ON_HOLD
   IN_PRODUCTION
+  TO_BE_PICKED
   ERROR
   DONE
 }

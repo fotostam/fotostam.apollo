@@ -125,9 +125,6 @@ const resolvers = {
       return order;
     },
     printOrder: async (_, args, context, info) => {
-      //Get order
-
-      console.log(args.id);
       let photos = await context.prisma.query.photos(
         {
           where: {
@@ -192,7 +189,7 @@ const resolvers = {
         return context.prisma.mutation.updateOrder(
           {
             data: {
-              status: "DONE",
+              status: "TO_BE_PICKED",
               error: ""
             },
             where: {
