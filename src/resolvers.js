@@ -1,5 +1,6 @@
 const {ordersByStatus, findImage} = require('./queries');
 const {newOrder} = require('./subscriptions');
+const {createOrder} = require('./mutations');
 
 const nodeResolver = {
   Node: {
@@ -10,10 +11,15 @@ const nodeResolver = {
 };
 
 const resolvers = [
+    //Queries
     ordersByStatus,
     findImage,
+    //Mutations
+    createOrder,
+    //Subscriptions
     newOrder,
-    nodeResolver
+    //Nodes
+    nodeResolver,
 ];
 
 module.exports = {
