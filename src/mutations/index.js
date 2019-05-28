@@ -1,9 +1,9 @@
 const { createOrder } = require('./CreateOrder');
+const { printOrder } = require('./PrintOrder');
 
 const mutations = [
-    createOrder
+    createOrder,
+    printOrder
 ];
 
-module.exports = {
-  mutations,
-};
+module.exports = mutations;

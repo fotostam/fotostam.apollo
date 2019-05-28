@@ -1,3 +1,5 @@
+const NEW_ORDER = 'NEW_ORDER';
+
 const newOrder = {
     Subscription: {
         newOrder: {
@@ -8,4 +10,5 @@ const newOrder = {
 
   module.exports = {
     newOrder,
+    NEW_ORDER
   }

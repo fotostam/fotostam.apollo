@@ -1,11 +1,10 @@
-const { orderByStatus } = require('./OrdersByStatus');
+const { ordersByStatus } = require('./OrdersByStatus');
 const { findImage } = require('./FindImage');
 
 const queries = [
-    orderByStatus,
+    ordersByStatus,
     findImage
 ];
 
-module.exports = {
-  queries,
-};
+
+module.exports = queries;

@@ -11,9 +11,14 @@ const setup = async () => {
     const order = await db.mutation.createOrder({
         data: {
             
-            name: 'First order',
-            group: 'Welpen',
+            name: 'Eef',
+            subtype: 'WELPEN',
             status: 'IN_PRODUCTION',
+            group: 'Fotostam',
+            camp: 4,
+            groupphoto: true,
+            print: true,
+            digital: true,
             photos: {
                 create: [
                 {

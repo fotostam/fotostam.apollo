@@ -4,7 +4,7 @@ type Order {
   updatedAt: DateTime! @updatedAt
   name: String!
   subtype: SubType!
-  group: SubType
+  group: String
   camp: Int
   groupphoto: Boolean! @default(value: false)
   digital: Boolean! @default(value: false)

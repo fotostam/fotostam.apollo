@@ -2,10 +2,17 @@ input PostOrderInput {
   name: String!
   group: String!
   status: Status!,
+  subtype: SubType!
+  camp: Int!
+  groupphoto: Boolean!
+  digital: Boolean! 
+  print: Boolean!
+  email: String
   photos: [PhotoInput!]!
 }
 
 input PhotoInput {
   tag: String!
   amount: Int!
+  status: PhotoStatus!
 }

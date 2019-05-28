@@ -6,5 +6,5 @@
 
 # Wierd use case
 extend type Photo {
-    url: String!
+    url: String
 }

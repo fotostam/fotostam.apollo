@@ -4,6 +4,4 @@ const subscriptions = [
     newOrder
 ];
 
-module.exports = {
-  subscriptions,
-};
+module.exports = subscriptions;

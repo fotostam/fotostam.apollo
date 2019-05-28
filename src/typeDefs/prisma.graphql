@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Wed May 15 2019 19:02:59 GMT+0200 (Central European Summer Time)
+# timestamp: Tue May 28 2019 20:37:40 GMT+0200 (Central European Summer Time)
 
 type AggregateOrder {
   count: Int!
@@ -53,8 +53,14 @@ type Order implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  name: String
+  name: String!
+  subtype: SubType!
   group: String
+  camp: Int
+  groupphoto: Boolean!
+  digital: Boolean!
+  print: Boolean!
+  email: String
   status: Status
   error: String
   photos(where: PhotoWhereInput, orderBy: PhotoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Photo!]
@@ -72,8 +78,14 @@ type OrderConnection {
 
 input OrderCreateInput {
   id: ID
-  name: String
+  name: String!
+  subtype: SubType!
   group: String
+  camp: Int
+  groupphoto: Boolean
+  digital: Boolean
+  print: Boolean
+  email: String
   status: Status
   error: String
   photos: PhotoCreateManyWithoutOrderInput
@@ -86,8 +98,14 @@ input OrderCreateOneWithoutPhotosInput {
 
 input OrderCreateWithoutPhotosInput {
   id: ID
-  name: String
+  name: String!
+  subtype: SubType!
   group: String
+  camp: Int
+  groupphoto: Boolean
+  digital: Boolean
+  print: Boolean
+  email: String
   status: Status
   error: String
 }
@@ -110,8 +128,20 @@ enum OrderOrderByInput {
   updatedAt_DESC
   name_ASC
   name_DESC
+  subtype_ASC
+  subtype_DESC
   group_ASC
   group_DESC
+  camp_ASC
+  camp_DESC
+  groupphoto_ASC
+  groupphoto_DESC
+  digital_ASC
+  digital_DESC
+  print_ASC
+  print_DESC
+  email_ASC
+  email_DESC
   status_ASC
   status_DESC
   error_ASC
@@ -122,8 +152,14 @@ type OrderPreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  name: String
+  name: String!
+  subtype: SubType!
   group: String
+  camp: Int
+  groupphoto: Boolean!
+  digital: Boolean!
+  print: Boolean!
+  email: String
   status: Status
   error: String
 }
@@ -167,7 +203,13 @@ input OrderSubscriptionWhereInput {
 
 input OrderUpdateInput {
   name: String
+  subtype: SubType
   group: String
+  camp: Int
+  groupphoto: Boolean
+  digital: Boolean
+  print: Boolean
+  email: String
   status: Status
   error: String
   photos: PhotoUpdateManyWithoutOrderInput
@@ -175,7 +217,13 @@ input OrderUpdateInput {
 
 input OrderUpdateManyMutationInput {
   name: String
+  subtype: SubType
   group: String
+  camp: Int
+  groupphoto: Boolean
+  digital: Boolean
+  print: Boolean
+  email: String
   status: Status
   error: String
 }
@@ -189,7 +237,13 @@ input OrderUpdateOneRequiredWithoutPhotosInput {
 
 input OrderUpdateWithoutPhotosDataInput {
   name: String
+  subtype: SubType
   group: String
+  camp: Int
+  groupphoto: Boolean
+  digital: Boolean
+  print: Boolean
+  email: String
   status: Status
   error: String
 }
@@ -332,6 +386,16 @@ input OrderWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  subtype: SubType
+
+  """All values that are not equal to given value."""
+  subtype_not: SubType
+
+  """All values that are contained in given list."""
+  subtype_in: [SubType!]
+
+  """All values that are not contained in given list."""
+  subtype_not_in: [SubType!]
   group: String
 
   """All values that are not equal to given value."""
@@ -372,6 +436,80 @@ input OrderWhereInput {
 
   """All values not ending with the given string."""
   group_not_ends_with: String
+  camp: Int
+
+  """All values that are not equal to given value."""
+  camp_not: Int
+
+  """All values that are contained in given list."""
+  camp_in: [Int!]
+
+  """All values that are not contained in given list."""
+  camp_not_in: [Int!]
+
+  """All values less than the given value."""
+  camp_lt: Int
+
+  """All values less than or equal the given value."""
+  camp_lte: Int
+
+  """All values greater than the given value."""
+  camp_gt: Int
+
+  """All values greater than or equal the given value."""
+  camp_gte: Int
+  groupphoto: Boolean
+
+  """All values that are not equal to given value."""
+  groupphoto_not: Boolean
+  digital: Boolean
+
+  """All values that are not equal to given value."""
+  digital_not: Boolean
+  print: Boolean
+
+  """All values that are not equal to given value."""
+  print_not: Boolean
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
   status: Status
 
   """All values that are not equal to given value."""
@@ -1063,4 +1201,15 @@ enum Status {
 type Subscription {
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
   photo(where: PhotoSubscriptionWhereInput): PhotoSubscriptionPayload
+}
+
+enum SubType {
+  BEVERS
+  WELPEN
+  SCOUTS
+  EXPLORERS
+  PIVO
+  STAFF
+  BRONBEEK
+  PERSONAL
 }

@@ -1,7 +1,10 @@
+const {thumbor} = require("../service/thumbor");
+
 const ordersByStatus = {
     Query: {
-        ordersByStatus: (_, args, context, info) => {
+        ordersByStatus: async (_, args, context, info) => {
           console.log('ay!');
+
             return context.prisma.query
               .orders(
                 {

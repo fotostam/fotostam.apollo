@@ -1,6 +1,11 @@
+const {client} = require("../service/elasticsearch");
+const {thumbor} = require("../service/thumbor");
+
 const findImage = {
     Query: {
             findImage: async (_, args, context, info) => {
+                console.log('findImage');
+
                 let result = await client.search({
                     index: "fotoindex",
                     body: {

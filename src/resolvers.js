@@ -1,6 +1,6 @@
-const {ordersByStatus, findImage} = require('./queries');
-const {newOrder} = require('./subscriptions');
-const {createOrder} = require('./mutations');
+const queries = require('./queries');
+const subscriptions = require('./subscriptions');
+const mutations = require('./mutations');
 
 const nodeResolver = {
   Node: {
@@ -10,17 +10,13 @@ const nodeResolver = {
   }
 };
 
-const resolvers = [
-    //Queries
-    ordersByStatus,
-    findImage,
-    //Mutations
-    createOrder,
-    //Subscriptions
-    newOrder,
-    //Nodes
-    nodeResolver,
+var resolvers = [
+  nodeResolver
 ];
+
+resolvers = resolvers.concat(queries);
+resolvers = resolvers.concat(mutations);
+resolvers = resolvers.concat(subscriptions);
 
 module.exports = {
   resolvers,
