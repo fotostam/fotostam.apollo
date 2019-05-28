@@ -1,0 +1,7 @@
+# import Order from './prisma.graphql'
+# import PostOrderInput from './input.graphql'
+
+type Mutation {
+  createOrder(order: PostOrderInput): Order,
+  printOrder(id: ID!): Order
+}

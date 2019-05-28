@@ -1,0 +1,10 @@
+# import * from "type.graphql"
+# import Query.* from "query.graphql"
+# import Mutation.* from "mutation.graphql"
+# import Input.* from "input.graphql"
+# import Subscription.* from "subscription.graphql"
+
+# Wierd use case
+extend type Photo {
+    url: String!
+}

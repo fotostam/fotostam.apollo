@@ -1,0 +1,12 @@
+type IndexedImage {
+   _id: String
+   _index: String
+   _type: String
+  camera: String
+  filename: String!
+  height: Int
+  size:	String
+  time: Int
+  width: Int
+  url: String
+}

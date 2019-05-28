@@ -1,0 +1,7 @@
+# import Order from './prisma.graphql'
+# import Photo from './prisma.graphql'
+
+type Query {
+  ordersByStatus(status: Status): [Order!]!,
+  findImage(tag: String): [IndexedImage!]
+} 

@@ -6,9 +6,9 @@ type Order {
   subtype: SubType!
   group: SubType
   camp: Int
-  groupphoto: Boolean!
-  digital: Boolean!
-  print: Boolean!
+  groupphoto: Boolean! @default(value: false)
+  digital: Boolean! @default(value: false)
+  print: Boolean! @default(value: true)
   email: String
   status: Status
   error: String

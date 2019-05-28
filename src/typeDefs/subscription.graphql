@@ -1,0 +1,6 @@
+# import Order from './prisma.graphql'
+
+type Subscription {
+  newOrder: Order!
+}
+

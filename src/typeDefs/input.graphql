@@ -1,0 +1,11 @@
+input PostOrderInput {
+  name: String!
+  group: String!
+  status: Status!,
+  photos: [PhotoInput!]!
+}
+
+input PhotoInput {
+  tag: String!
+  amount: Int!
+}

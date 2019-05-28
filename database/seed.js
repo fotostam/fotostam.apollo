@@ -2,7 +2,7 @@ require('dotenv').config()
 const { Prisma } = require('prisma-binding')
 
 const db = new Prisma({
-    typeDefs: 'src/generated/prisma.graphql',
+    typeDefs: 'src/typeDefs/prisma.graphql',
     endpoint: process.env.PRISMA_URL
   });
 
